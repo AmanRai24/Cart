@@ -92,26 +92,54 @@ handledecreaseQuantity=(product)=>{
   const{products}=this.state;
   const index=products.indexOf(product);
 
-  if(products[index].qty===0)
-  {
-    return;
-  }
+//   if(products[index].qty===0)
+//   {
+//     return;
+//   }
 
-  products[index].qty-=1;
+//   products[index].qty-=1;
   
-  this.setState({
-    products:products
-  });
-};
+//   this.setState({
+//     products:products
+//   });
+// };
+
+if(products[index].qty === 0){
+  return;
+}
+
+const docRef = this.db.collection('Products').doc(products[index].id);
+
+docRef
+.update({
+    qty: products[index].qty-1
+}).then(() => {
+  console.log('Decrease Successfully');
+}).catch((err) => {
+  console.log('Error',err);
+})
+
+}
 
 handleDeleteProduct=(id)=>{
-const{products}=this.state;
+//const{products}=this.state;
 
-const items=products.filter((item)=>item.id!==id);
-this.setState({
-  products:items
-});
-};
+// const items=products.filter((item)=>item.id!==id);
+// this.setState({
+//   products:items
+// });
+// };
+
+const docRef = this.db.collection('Products').doc(id);
+
+      docRef
+        .delete()
+        .then(() => {
+          console.log('Product Deleted Successfully');
+        }).catch((err) => {
+          console.log('Error',err);
+        })
+  }
 
 getCartCount=()=>{
   const{products}=this.state;
@@ -139,7 +167,7 @@ getCartTotal = () => {
 };
 
    render(){
-    const{products}=this.state;
+    const{products,loading}=this.state;
     return (
     <div className="App">
       <Navbar count={this.getCartCount()} />
@@ -148,8 +176,9 @@ getCartTotal = () => {
         onIncreaseQuantity={this.handleIncreaseQuantity}
         onDecreaseQuantity={this.handledecreaseQuantity}
         onDeleteProduct={this.handleDeleteProduct}
-        products={products}
+        //products={products}
       />
+      { loading && <h1>Loading Products...</h1>}
       <div style={ {padding: 10, fontSize: 20} }>TOTAL: {this.getCartTotal()} </div>
     </div>
     
