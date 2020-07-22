@@ -1,6 +1,19 @@
 # Cart
 
+This project is the structure of a Cart which are usually visible on different Shoppin Websites(Amazon/flipkart).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Features
+
+- User can *increase* the quantity of product.
+- User can *decrease* the quantity of product.
+- User can *delete* the product from the cart.
+- *Total quantity* of items in the cart are visible in top right corner.
+- *Total price* of item is visible at bottom.
+- The sorage is persistance as we use *Firebase to store data*.
+
+ ![](/image/home.JPG)
 
 ## Available Scripts
 
