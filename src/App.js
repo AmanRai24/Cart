@@ -42,8 +42,8 @@ componentDidMount(){
 
     this.db
     .collection('Products')
-    // .where('price', '<=', 300) //(to get only thoes data whorice price<=300) 
-    // .orderBy('price', 'desc') //(short the data in desc/aesc)
+    // .where('price','<=',3000) //(to get only thoes data whorice price<=300) 
+    // .orderBy('price','desc') //(short the data in desc/aesc)
     .onSnapshot((snapshot)=>{
       console.log(snapshot);
 
@@ -166,11 +166,28 @@ getCartTotal = () => {
   return cartTotal;
 };
 
+addProduct = () =>{
+  this.db
+    .collection('Products')
+    .add({
+      img: 'https://compass-ssl.xbox.com/assets/57/9f/579fa122-7ebf-43a3-a53a-58ba27805ba5.png?n=X1X_Image-0_X1X-Purchase_1600x500.png',
+      title: 'Xbox',
+      price: 45599,
+      qty: 1
+    }).then((docRef) => {
+      console.log('Product addded',docRef);
+    }).catch((err) => {
+      console.log('Error',err);
+    })
+}
+
+
    render(){
     const{products,loading}=this.state;
     return (
     <div className="App">
       <Navbar count={this.getCartCount()} />
+     {/*<button onClick={this.addProduct} style={{padding:20, fontSize: 20}} >Add product</button> */}
       <Cart
         products={products}
         onIncreaseQuantity={this.handleIncreaseQuantity}
